@@ -1,4 +1,5 @@
 from tkinter import messagebox
+import time
 
 
 def como_jogar():

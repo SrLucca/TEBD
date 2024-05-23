@@ -1,14 +1,18 @@
 import tkinter as tk
 from game import jogar
 from how_to_play import como_jogar
-
-
-def sair():
-    root.destroy()
-
+from handler.exit import sair
 
 root = tk.Tk()
 root.title("Sabonete")
+
+
+def inicia_jogo():
+    jogar(root)
+
+
+def fecha_menu():
+    sair(root)
 
 
 window_width = 800
@@ -29,10 +33,9 @@ frame = tk.Frame(root)
 frame.pack(expand=True)
 
 
-btn_jogar = tk.Button(frame, text="Jogar", command=jogar)
+btn_jogar = tk.Button(frame, text="Jogar", command=inicia_jogo)
 btn_como_jogar = tk.Button(frame, text="Como Jogar", command=como_jogar)
-btn_sair = tk.Button(frame, text="Sair", command=sair)
-
+btn_sair = tk.Button(frame, text="Sair", command=fecha_menu)
 
 btn_jogar.pack(pady=10)
 btn_como_jogar.pack(pady=10)
