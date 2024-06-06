@@ -4,7 +4,7 @@ from how_to_play import como_jogar
 from handler.exit import sair
 
 root = tk.Tk()
-root.title("Sabonete")
+root.title("Jogo da Bruxa")
 
 
 def inicia_jogo():
@@ -15,8 +15,8 @@ def fecha_menu():
     sair(root)
 
 
-window_width = 800
-window_height = 600
+window_width = 1280
+window_height = 720
 
 
 screen_width = root.winfo_screenwidth()
