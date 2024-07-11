@@ -75,10 +75,22 @@ def jogar(root):
         return btn_carta
 
     # Adiciona 20 botões de cartas em posições aleatórias
+    espaco1 = 0
+    espaco2 = 0
     for i in range(20):
+        x = 0
+        y = 0
         carta_escolhida = cartas.pop()
-        x = random.randint(50, 500)  # Ajuste os valores conforme necessário
-        y = random.randint(50, 300)  # Ajuste os valores conforme necessário
+        if i > 9:
+            x = 70 + espaco1
+            y = 150
+            espaco1 += 120
+            print(espaco1)
+        else:
+            x = 70 + espaco2
+            y = 500
+            espaco2 += 120
+            print(espaco2)
         criar_botao_carta(root, carta_escolhida, x, y)
 
     btn_monte = tk.Button(root, text="Monte", command=lambda: print("Monte clicado"))
