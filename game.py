@@ -5,6 +5,9 @@ import random
 from PIL import ImageTk, Image
 from db import search_all_questions
 from do_math import ask_user_input
+from playsound import playsound
+import threading
+
 class DragDropApp:
 
     def __init__(self, button, root, game):
@@ -31,8 +34,9 @@ class DragDropApp:
 
     def on_drop(self, event):
         """Called on button release to end dragging."""
+        threading.Thread(target=playsound, args=('assets/audio/drop.mp3',), daemon=True).start()
         self.game.check_winner(self.button.winfo_y())
-
+        
 TURNO = 1  # Inicializa a variável TURNO
 
 def test_func(btn_carta, carta):
@@ -100,7 +104,7 @@ class Game:
         def criar_nova_carta():
             carta = self.cartas[random.randint(0, len(self.cartas)-1)]
             self.cartas.remove(carta)
-            photo = ImageTk.PhotoImage(Image.open(f'assets/{carta}.jpeg').resize((80,100)))
+            photo = ImageTk.PhotoImage(Image.open(f'assets/img/{carta}.jpeg').resize((80,100)))
             criar_botao_carta(root=self.root, carta=carta, x=-10, y=-10, foto=photo)
 
         # Adiciona 20 botões de cartas em posições aleatórias
@@ -111,7 +115,7 @@ class Game:
             y = 0
             carta_escolhida = self.cartas[random.randint(0, len(self.cartas)-1)]
             self.cartas.remove(carta_escolhida)
-            photo = ImageTk.PhotoImage(Image.open(f'assets/{carta_escolhida}.jpeg').resize((80,100)))
+            photo = ImageTk.PhotoImage(Image.open(f'assets/img/{carta_escolhida}.jpeg').resize((80,100)))
             if i > 9:
                 x = 70 + espaco1
                 y = 150
