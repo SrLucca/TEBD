@@ -1,5 +1,5 @@
 import tkinter as tk
-from game import jogar
+from game import iniciar_jogo
 from how_to_play import como_jogar
 from handler.exit import sair
 
@@ -8,7 +8,7 @@ root.title("Jogo da Bruxa")
 
 
 def inicia_jogo():
-    jogar(root)
+    iniciar_jogo(root)
 
 
 def fecha_menu():
