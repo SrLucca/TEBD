@@ -3,7 +3,8 @@ from handler.exit import sair
 from tkinter import messagebox
 import random
 from PIL import ImageTk, Image
-
+from db import search_all_questions
+from do_math import ask_user_input
 class DragDropApp:
 
     def __init__(self, button, root, game):
@@ -39,14 +40,17 @@ def test_func(btn_carta, carta):
     
     
 
-def change_turno(turno_label):
+def change_turno(turno_label, questions):
+    show_box = ask_user_input(questions)
     global TURNO  # Referenciando a variável global
-    if TURNO == 1:
-        TURNO = 0
-    else:
-        TURNO = 1
 
-    turno_label.config(text=f"Vez do jogador {TURNO}!")
+    if show_box:
+        if TURNO == 1:
+            TURNO = 0
+        else:
+            TURNO = 1
+
+        turno_label.config(text=f"Vez do jogador {TURNO}!")
     
 
 class Game:
@@ -62,6 +66,7 @@ class Game:
         random.shuffle(self.cartas)
         self.turno_label = None
         self.jogar()
+        
 
     def jogar(self):
         for widget in self.root.winfo_children():
@@ -70,7 +75,7 @@ class Game:
         self.root = self.root
         
         # Desenha a nova tela do jogo
-        lbl_jogo = tk.Label(self.root, text="Tela do Jogo", font=("Helvetica", 16))
+        lbl_jogo = tk.Label(self.root, text="Jogo da Bruxa", font=("Helvetica", 16))
         lbl_jogo.pack(pady=20)
 
         frame_superior = tk.Frame(self.root)
@@ -81,6 +86,7 @@ class Game:
 
         self.turno_label = tk.Label(self.root, text=f"Vez do jogador {TURNO}!")
         self.turno_label.pack()
+        self.perguntas = search_all_questions()
 
         # Função para criar botões de cartas
         def criar_botao_carta(root, carta, x, y, foto):
@@ -122,9 +128,9 @@ class Game:
         btn_sair = tk.Button(self.root, text="Sair", command=lambda: sair(self.root))
         btn_sair.pack(pady=10)
 
-        btn_turno = tk.Button(self.root, text="Passar a vez", command=lambda: change_turno(self.turno_label))
+        btn_turno = tk.Button(self.root, text="Passar a vez", command=lambda: change_turno(self.turno_label, questions=self.perguntas))
         btn_turno.pack(pady=250)
-        print(self.cartas)
+
     def check_winner(self, y):
         def get_cartas_em_ordem(y_position):
             cartas = []
@@ -159,8 +165,8 @@ class Game:
                     elif carta_text == "K":
                         cartas_inferior.append(13)
 
-            print(f'superior: {cartas_superior}')
-            print(f'inferior: {cartas_inferior}')
+            #print(f'superior: {cartas_superior}')
+            #print(f'inferior: {cartas_inferior}')
 
             if cartas_superior == list(range(1, 11)):
                 messagebox.showinfo("Vencedor", "Jogador Superior venceu!")
